@@ -1,4 +1,4 @@
-const config = require('../../config/config');
+const config = require('../config/config');
 var strQryCount = { $group: { _id: null, count: { $sum: 1 }}};
 
 const express = require('express');
@@ -20,20 +20,7 @@ module.exports = {
                 var arrayAllObjData =[];
                 var query= {strStatus:'N'};
                 var query1= {};
-
-                if (obj.strToDdate) 
-                    strToDdate = new Date(obj.strToDdate);
-                
-                if (obj.strFromDate) {
-                    strFromDate = new Date(obj.strFromDate);
-                    if(!obj.strToDdate){
-                        strToDdate =strFromDate;
-                    }
-                    strFromDate.setHours(0, 0, 0, 0);
-                    strToDdate.setHours(23, 59, 59, 999)
-                    query.datCreateDateAndTime = { $gte: strFromDate, $lt: strToDdate }
-                }
-
+              
                 if(obj.userName)
                     query.userName =obj.userName
   

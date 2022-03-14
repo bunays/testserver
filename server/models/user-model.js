@@ -1,11 +1,11 @@
-const config = require('../../config/config');
+const config = require('../config/config');
 var strQryCount = { $group: { _id: null, count: { $sum: 1 }}};
 
 
 const express = require('express');
 var ObjectID = require("mongodb").ObjectID;
 const router = express.Router();
-const common = require('../../globel/common');
+const common = require('../globel/common');
 var arryEmpty = [];
 const jwt = require('jsonwebtoken');
 var upperCase = require('upper-case');
@@ -59,16 +59,7 @@ module.exports = {
                                             addTime: Date.now(),
                                             status: 0
                                         };
-                                        db.collection(config.USER_DEVICES_COLLECTION).insertOne(userDeviceData, (e1, userDeviceData) => {
-                                            resolve ({
-                                                success: true,
-                                                message: 'You are login',
-                                                data: doc,
-                                                token: token,
-                                                data: [objUserData]
-                                                
-                                            });
-                                        });
+                                    
                                     } else {
                                         resolve({
                                             success: true,
@@ -128,14 +119,7 @@ module.exports = {
                                                 addTime: Date.now(),
                                                 status: 0
                                             };
-                                            db.collection(config.USER_DEVICES_COLLECTION).insert(userDeviceData, (e1, userDeviceData) => {
-                                                resolve({
-                                                    success: true,
-                                                    message: 'You are login',
-                                                    data: doc1,
-                                                    token: token
-                                                });
-                                            });
+                                         
                                         } else {
                                             resolve({
                                                 success: true,
