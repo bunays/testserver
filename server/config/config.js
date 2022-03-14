@@ -10,7 +10,7 @@ CONNECTION_URL: "mongodb+srv://admin:admin@bunu@cluster0.lwg1t.mongodb.net/db_te
     USER_COLLECTION : 'cln_user',
    
 
-    JWT_SECRET: 'p04$&S()*2'
+    JWT_SECRET: 'LKI&%$#@*&'
 
     
 
