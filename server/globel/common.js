@@ -1,11 +1,8 @@
 
 
 const config = require('../config/config');
-var strQryCount = { $group: { _id: null, count: { $sum: 1 }}};
 const jwt = require('jsonwebtoken');
-
 const express = require('express');
-var ObjectID = require("mongodb").ObjectID;
 const router = express.Router();
 
 var arryEmpty = [];
@@ -15,10 +12,6 @@ var upperCase = require('upper-case');
 /*
      TODO @Function:
      */
-
-
-
-
 
 module.exports = {
     crypto: require("crypto"),
@@ -57,15 +50,12 @@ module.exports = {
            
             if (typeof bearerHeader !== 'undefined') {
                 const bearer = bearerHeader.split(' ');
-                console.log("bearer  ----",bearer)
                 const bearertoken = bearer[1];
-                console.log("bearertoken ----",bearertoken)
-                req.token = bearertoken; // Attach token to request.
-              //  console.log("req.token  ----",req.token)
-                jwt.verify(req.token, config.JWT_SECRET, (err, decoded) => { // decoded value s // console.log('decoded', decoded.user);
+                req.token = bearertoken; 
+                jwt.verify(req.token, config.JWT_SECRET, (err, decoded) => { 
                     if (err) {
                         return res.json({ success: false, message: 'Token Error', data: err })
-                    } // Attach decoded user details to request.
+                    } 
                     if (!decoded) {
                         return res.status(401).end();
                     } else {
@@ -78,7 +68,6 @@ module.exports = {
             }
 
         } catch (e) {
-            console.log("Error", e);
             res.status(500).json({ success: false, message: "Error: No authorization header present ::" + e, data: [] });
         }
 
