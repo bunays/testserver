@@ -14,6 +14,7 @@ module.exports = {
 
         //This function listing details from user form.
     funGetAllUserDetails: GetAllUserDetails=(obj,db)=> {
+        console.log("agtt ----",obj)
         return new Promise((resolve, reject) => {
             try{
                 var arrayAllObjData =[];
@@ -49,11 +50,12 @@ module.exports = {
                 if(obj.intPageLimit)
                     intPageLimit = parseInt(obj.intPageLimit);
 
-                // var Project = { $project : {
-                //     _id:"$_id",
-                //     pkIntCountryId: "$pkIntCountryId",
-                //     CountryName:"$CountryName", 
-                // }};
+                var Project = { $project : {
+                    _id:"$_id",
+                    email: "$email",
+                    userName:"$userName", 
+                    mobile:"$mobile", 
+                }};
             
     
                 db.collection(config.USER_COLLECTION).aggregate([{

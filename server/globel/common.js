@@ -44,7 +44,9 @@ module.exports = {
     },
 // validate password with exsisting
     validPassword: function (password, doc) {
-        var hash = this.crypto.pbkdf2Sync(password, doc.strPrePassword, 1000, 64, 'sha1').toString('hex');
+        console.log("password ----",password)
+        console.log("doc ----",doc)
+        var hash = this.crypto.pbkdf2Sync(password, doc.prePassword, 1000, 64, 'sha1').toString('hex');
         return { hash: hash };
     },
 

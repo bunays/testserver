@@ -19,7 +19,7 @@ module.exports = {
             try {
                 var checkQuery = ({$or: [ { email:obj.email },{ mobile: obj.mobile },{ userName: obj.userName} ]});
                 db.collection(config.USER_COLLECTION).find(checkQuery).toArray( (err,user) => {
-                    if(user){
+                    if(user && user.length){
                         resolve({ success: false, message: 'Email,User Name or Mobile Number Already Exists',data:[] });
                     }else{
                         var passObj = common.setPassword(obj.password);
@@ -32,7 +32,7 @@ module.exports = {
                             lastName :  obj.lastName,
                             mobile:obj.mobile,
                             password : passObj.hash,
-                            strPrePassword: passObj.salt,
+                            prePassword: passObj.salt,
                             datCreateDateAndTime: new Date(),
                             datLastModifiedDateTime: null,
                             strStatus: 'N',
@@ -43,7 +43,7 @@ module.exports = {
                             else if(doc && doc.ops && doc.ops.length) {
                                 let objUserData =doc.ops[0];
                                 delete objUserData.password;
-                                delete objUserData.strPrePassword;
+                                delete objUserData.prePassword;
                         
                                 let obj = doc.ops
                         
@@ -96,6 +96,7 @@ module.exports = {
 
         //This fucntion login admin details from user form.
     funCheckUserNameAndPassword:funCheckUserNameAndPassword=(obj,db)=> {
+        console.log("siuhcx ==--",obj)
         return new Promise((resolve, reject) => {
             try {
                 db.collection(config.USER_COLLECTION).findOne({email: obj.email}, (err, doc) => {
@@ -117,7 +118,7 @@ module.exports = {
                                     var objPasData = {email: obj.email, intUserId: doc1[0].intUserId};
                                     jwt.sign({user: objPasData}, config.JWT_SECRET, (err, token) => {
                                         delete doc1[0].password;
-                                        delete doc1[0].strPrePassword;
+                                        delete doc1[0].prePassword;
                                         if (obj.deviceType && obj.deviceToken) { 
                                             var userDeviceData = {
                                                 intUserId: doc1[0].intUserId,
