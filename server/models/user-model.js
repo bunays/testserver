@@ -49,26 +49,15 @@ module.exports = {
                         
                                 var objPasData = {email: obj.email, intUserId: doc.ops[0].intUserId};
                                 jwt.sign({user: objPasData}, config.JWT_SECRET, (err, token) => {
-                                    
-                                    if (obj.deviceType && obj.deviceToken) {
-                                        var userDeviceData = {
-                                            intUserId: doc[0].intUserId,
-                                            deviceType: obj.deviceType,
-                                            deviceToken: obj.deviceToken,
-                                            token: token,
-                                            addTime: Date.now(),
-                                            status: 0
-                                        };
-                                    
-                                    } else {
-                                        resolve({
-                                            success: true,
-                                            message: 'You are login',
-                                            data: doc,
-                                            token: token,
-                                            data: [objUserData]
-                                        })
-                                    }
+                                    {expiresIn: "10h"}
+                                    resolve({
+                                        success: true,
+                                        message: 'You are login',
+                                        data: doc,
+                                        token: token,
+                                        data: [objUserData]
+                                    })
+                            
                                 })
                         
                             } 
@@ -107,27 +96,17 @@ module.exports = {
                                     resolve({success: false, message: 'The password is invalid', data: arryEmpty});
                                 } else {
                                     var objPasData = {email: obj.email, intUserId: doc1[0].intUserId};
-                                    jwt.sign({user: objPasData}, config.JWT_SECRET, (err, token) => {
+                                    jwt.sign({user: objPasData}, config.JWT_SECRET, {expiresIn: "60s"}, (err, token) => {
+                                        
                                         delete doc1[0].password;
                                         delete doc1[0].prePassword;
-                                        if (obj.deviceType && obj.deviceToken) { 
-                                            var userDeviceData = {
-                                                intUserId: doc1[0].intUserId,
-                                                deviceType: obj.deviceType,
-                                                deviceToken: obj.deviceToken,
-                                                token: token,
-                                                addTime: Date.now(),
-                                                status: 0
-                                            };
-                                         
-                                        } else {
-                                            resolve({
-                                                success: true,
-                                                message: 'You are login',
-                                                data: doc1,
-                                                token: token
-                                            });
-                                        }
+                                        resolve({
+                                            success: true,
+                                            message: 'You are login',
+                                            data: doc1,
+                                            token: token
+                                        });
+                                    
                                     })
 
                                 }

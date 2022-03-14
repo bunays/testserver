@@ -15,7 +15,7 @@ module.exports = (app, db) => {
     TODO:This api use Save user details in Data Base
     @Function: Save user details Data
     */
-    app.post('/api/auth/signup', (req,res) =>  { 
+    app.post('/api/auth/signup',common.verifyToken ,(req,res) =>  { 
         try{
              var obj = req.body;
              var strActionType ="SAVE";
@@ -42,7 +42,7 @@ module.exports = (app, db) => {
     TODO:This api use user Login details in Data Base
     @Function: Login user details Data
     */
-    app.post('/api/auth/login', (req,res) =>  { 
+    app.post('/api/auth/login',(req,res) =>  { 
         try{
             var obj = req.body;
             if(common.isEmptyObject(obj))  
@@ -70,10 +70,12 @@ module.exports = (app, db) => {
     TODO:This api use List user details in Data Base
     @Function: Listing user details Data
     */
-    app.get('/api/user/getListAllUserDetails',(req,res) => {
-        console.log("reqreqreqreq ----",req)
+    app.get('/api/user/getListAllUserDetails',common.verifyToken,(req,res) => {
+        console.log("req- ----",req.query)
+       console.log("params- ----",req.body)
+      //  console.log("query- ----",req.query)
         try{
-            var obj = req.body._id
+            var obj = req.query
             console.log("whsx ----",obj)
             if(!obj){
                 res.json({success: false, message: 'Params missing',data:arryEmpty});

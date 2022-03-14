@@ -51,12 +51,17 @@ module.exports = {
     },
 
     verifyToken: (req, res, next) =>{
+      
         try {
             const bearerHeader = req.headers['authorization'];
+           
             if (typeof bearerHeader !== 'undefined') {
                 const bearer = bearerHeader.split(' ');
+                console.log("bearer  ----",bearer)
                 const bearertoken = bearer[1];
+                console.log("bearertoken ----",bearertoken)
                 req.token = bearertoken; // Attach token to request.
+              //  console.log("req.token  ----",req.token)
                 jwt.verify(req.token, config.JWT_SECRET, (err, decoded) => { // decoded value s // console.log('decoded', decoded.user);
                     if (err) {
                         return res.json({ success: false, message: 'Token Error', data: err })
