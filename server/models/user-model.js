@@ -95,8 +95,7 @@ module.exports = {
                                     resolve({success: false, message: 'The password is invalid', data: arryEmpty});
                                 } else {
                                     var objPasData = {email: obj.email, intUserId: doc1[0].intUserId};
-                                    jwt.sign({user: objPasData}, config.JWT_SECRET,  (err, token) => {
-                                        // {expiresIn: "300s"},
+                                    jwt.sign({user: objPasData}, config.JWT_SECRET, {expiresIn: "300s"}, (err, token) => {
                                         delete doc1[0].password;
                                         delete doc1[0].prePassword;
                                         resolve({
