@@ -71,9 +71,6 @@ module.exports = (app, db) => {
     @Function: Listing user details Data
     */
     app.get('/api/user/getListAllUserDetails',common.verifyToken,(req,res) => {
-        console.log("req- ----",req.query)
-       console.log("params- ----",req.body)
-      //  console.log("query- ----",req.query)
         try{
             var obj = req.query
             console.log("whsx ----",obj)
